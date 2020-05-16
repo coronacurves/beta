@@ -1,0 +1,174 @@
+<html>
+<head>
+<title>How To Read {{ SYSNAME }} Plots</title>
+<link rel="stylesheet" type="text/css" href="static/00site.css">
+<style>
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.blocknote {
+    font-size: small;
+    padding: 0px;
+    margin-top: 0px;
+}
+</style>
+</head>
+<body>
+<a href="{{ HOME_HREF }}">Home</a>
+<h1>How To Read {{ SYSNAME }} Plots</h1>
+<p>
+After outputting a standard header,
+{{ SYSNAME }} produces two plots for each geographic locality, one on the left-hand
+side of the screen and one on the right.
+</p>
+<p>
+We will use this May 11, 2020 plot for Duval County, Florida to illustrate the
+meaning of each of its elements.
+</p>
+<blockquote>
+<img src="/static/00full_example.png" border="1" width="100%" />
+</blockquote>
+
+<h3>Header</h3>
+<blockquote>
+
+This is the "header" of the plot:
+
+<img src="/static/00header.png" border="1" width="100%" />
+<p>
+It starts by printing the name of the data channel in yellow.  In this case, it is the
+number of new positive covid cases per day, according to the data of Johns Hopkins
+University (JHU).  When you choose to plot one of the other available
+data channels, you will see its name in the header's yellow area instead.
+</p>
+<p>
+Parts of the second line will make more sense if explained later, for the right-hand
+plot.  For now, notice only
+that the the header tells you exactly which version of the data channel was used. In 
+this case the "Dataset of: 11May20 05:11 UTC" phrase tells you that {{ SYSNAME }} acquired
+its case data from Johns Hopkins at that time. 
+</p>
+<p>
+The third line is a standard reminder that, when looking at the number of new daily
+cases, that number is always influenced by the amount of testing available in the
+geographic locality.  {{ SYSNAME }} does not try to account for testing volume in 
+any of the plots it produces, leaving instead the interpretation to you.  Testing
+volume also applies to the number of deaths, but to a lesser extent.
+</p>
+
+</blockquote>
+
+<h3>Right-hand plot</h3>
+<img src="/static/00right.png" border="0" />
+<blockquote>
+<p>
+The right-hand graph plots the raw data with a thin jagged line.  The name of the data channel is at left,
+in light gray, rotated 90 degrees, and the geographic locality is written in the upper left.
+</p>
+<p>
+To reduce the noise (variability) that is often present in the raw data, a thick line shows
+an "exponential weighted method" applied to mathematically smooth the raw data.
+</p>
+<p>
+At the extreme right, the plot also shows extrapolations of the data forward in time.  
+Extrapolation of the thin raw-data line is shown by a thin line ending in a square.
+Extrapolation of the thick smoothed-data line is shown by a thick line ending in a circle.
+(Just remember: the smoothed data extrapolation ends with the smooth object.)
+You'll see that the two different extrapolations can differ -- sometimes markedly!
+</p>
+<p>
+Only a subset of the data is used to make each extrapolation.  The extrapolation lines show
+the subset that is being used.  (Note: sometimes, as in the example above, a segment of the 
+thin extrapolation line for the raw data overlies the x-axis, and so becomes invisible.)
+</p>
+<p>
+Although we use the word "extrapolation," a glance at the graph shows that they are also
+best-fit curves for the region where they overlap the underlying data.  This best-fit
+nature becomes very important in the left-hand plot discussed below.
+</p>
+<p>
+The extrapolations have to be taken with a grain of salt.
+In all cases the software tries to fit an exponential curve, no matter if it is the best model or not.
+Sometimes liberties have to be taken in order to make that possible.  (For example: if a zero or negative
+number is present in the data, that will explode logarithmic expressions used as part of the extrapolation.
+To avoid that, we add a constant to all data values, do the extrapolation, and then subtract the constant.)
+</p>
+You may also see that extrapolations go very badly when data are sparse.  The software makes no
+effort to deal with such situations -- the responsibility for interpreting the plots always
+rests with the user.  Sometimes the extrapolations can't be computed at all.
+</p>
+</blockquote>
+
+<h3>Left-hand plot</h3>
+
+<img src="/static/00left.png" border="0" />
+<blockquote>
+
+<p>
+Expressed most simply, the left-hand plot shows multiple trends that are present in the right-hand plot.
+The trends are based on the extrapolations made on the right-hand plot.  As will be discussed later,
+the left-hand plot even provides a "trend trend" of the extrapolations.
+<blockquote class="blocknote">
+Mathematically, you can think of trends as the first-derivative and  "trend-trends" as the second-derivative,
+where the original "equation" is either the raw or the smoothed extrapolations.  
+More physically minded persons can think of trend as the speed and the
+trend-trend as the acceleration of the extrapolations.
+</blockquote>
+</p>
+<p>
+To explain the left-hand plot, we start with the extrapolations in the right-hand plot.
+Both the raw-data and the smoothed-data extrapolations are also "best-fit" curves.
+These best-fit curves have a slope, more or less: the steeper the slope -- up or down -- the more
+the underlying values are changing on a daily basis.
+<blockquote class="blocknote">
+"Slope" is not actually correct, because the extrapolations are exponentials, not straight lines.
+Still, the concept is the same: the more the extrapolation line rises or falls, the faster the 
+underlying data is changing.
+</blockquote>
+</p>
+<p>
+The steepness of each extrapolation/best-fit line can be expressed as the percentage change from day to day.  
+This explains the labels on the x-axis at the bottom of the plot.  The percent daily change
+translates directly into doubling times and halving times -- shown as the x-axis labels
+at the top of the plot.
+</p>
+<p>
+The percent-daily-change for the smoothed data is plotted as a circle, and the percent-daily-change
+for the raw data is plotted as a square.  The square and circle are connected by a line -- the
+width of the line is proportional to the number of cases occurring in that geography.
+<blockquote class="blocknote">
+When there is difficulty or aberrancy in calculating the extrapolation, the difference between
+the square and the circle can be pronounced, as in the second line of the example plot.
+</blockquote>
+</p>
+<p>
+Several such square-line-circle groups are plotted.  The top one uses the extrapolations from today.
+The one underneath uses the extrapolations from yesterday, and so on.  The square-line-circle
+elements get fainter as they get older.
+</p>
+<p>
+Ideally we want the square and the circle to overlie, but they hardly ever do.
+The difference is an indicator of the amount of noise in the data.
+</p>
+<p>
+For data channels that indicate misfortune -- cases, deaths, ICU admissions, etc. -- the ideal
+is to have all points as far left as possible, indicating a rapid decline in misfortune.
+To date, only one data channel is the opposite: the ideal is for the number of tests conducted
+to be increasing rapidly, i.e. tending as far to the right as possible.
+</p>
+<p>
+The change rates for the smoothed data are connected by a vertical blue line.  The slope of this
+line is the "trend-trend."  In other words, a line that tilts to the right indicates an accelerating
+growth in the parameter measured by the raw data -- as is the case in the example plot shown, where the 
+daily number of new cases is now growing at 1.3% per day vs. shrinking by 8% per day six days earlier.
+</p>
+<p>
+For data channels that indicate misfortune, the ideal blue line tilts to the left, indicating an
+accelerating drop in the data values each day.
+</p>
+</blockquote>
+
+</body>
+</html>

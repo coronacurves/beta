@@ -1,0 +1,92 @@
+<html>
+<head>
+<title>About {{ SYSNAME }}</title>
+<link rel="stylesheet" type="text/css" href="static/00site.css">
+</head>
+<body>
+<a href="{{ HOME_HREF }}">Home</a>
+<h1>About {{ SYSNAME }}</h1>
+<h3>History</h3>
+<blockquote>
+    This software was designed to visualize geographically-specific trends of the
+    covid-19 epidemic, based on data compiled by Johns Hopkins University and
+    the New York Times.  It was developed by a member of the US military for
+    personal convenience.  The software is offered "as is" with absolutely no
+    claim by any party as to its accuracy, suitability, safety, correctness, or any other 
+    characteristic.  Use it entirely at your own risk.  If you are ill or are 
+    concerned about someone who seems to be ill, consult a physician.
+    <p/>
+    The software may be operated from the command line or via a web browser.
+</blockquote>
+<h3>Instructions for web use</h3>
+<ol>
+    <li>
+        On the home page choose a parameter to visualize.  Both Johns Hopkins (JHU) and
+        the New York Times (NYT) provide information on the number of covid-19 deaths 
+        and the number of identified new cases.
+    </li>
+    <li>
+        Choose one or more geographical localities by checking the corresponding
+        check box.  The names of some geographical localities are links -- click on the
+        link to show sub-localities that may be chosen.
+    </li>
+    <li>
+        Click the "{{ BUTTON_TEXT }}" button to display the plots for each geographic locality.
+        There is help on <a href="{{ HOW_TO_READ_HREF }}">how to interpret the plots</a>.
+    </li>
+</ol>
+<h3>Instructions for command-line use</h3>
+<blockquote>
+    Consult the README file in the software repository
+    (<a href="https://github.com/coronacurves/">originally on Github</a>).
+</blockquote>
+<h3>Instructions for installation</h3>
+<blockquote>
+    Consult the README file in the software repository
+    (<a href="https://github.com/coronacurves/">originally on Github</a>).
+</blockquote>
+<h3>Architecture of web implementation</h3>
+<blockquote>
+    If implemented as a web application, the system will pull down
+    updated copies of the epidemiological data whenever JHU or the NYT update the data on
+    their web sites.  (Webmasters must set up a cron job to enable the auto-updating.)
+    <p/>
+    The web application will automatically use the latest downloaded
+    copy of the epidemiological data.
+</blockquote>
+<h3>Shortcomings of web operations, and room for improvement</h3>
+<ol>
+    <li> User interface</li>
+    <blockquote>
+        Bare bones, but functional.  Ripe with improvement possibilities.
+    </blockquote>
+    <li> Scalability</li>
+    <blockquote>
+        Scalability is limited for two main reasons.
+        <p/>
+        Flask is the default web server.  Greater scalability and stability
+        could be achieved using Gunicorn and Nginx.
+        <p/>
+        Matplotlib draws the plots.  Matplotlib is not thread-safe, and so, to operate
+        in a web environment, the software kicks off a new process in response to each
+        plot request and blocks until the process completes.  This architecture could
+        obviously be improved.
+    </blockquote>
+    <li> Output format</li>
+    <blockquote>
+        Is not customizable.  On the other hand, it does provide a single, fixed .png
+        file that can be easily shared.
+    </blockquote>
+</ol>
+<h3>Shortcomings of data</h3>
+<blockquote>
+    Additional data sources could be added.
+    <p/>
+    Assuming the new data source is a file to be downloaded from the Internet, you'll
+    subclass the <b>WebSource</b> class in the file <b>web_grab.py</b>.  You'll have
+    to look at the subclasses related to JHU and the NYT to figure out the slots
+    to specify and methods to define. 
+</blockquote>
+<center><a href="{{ HOME_HREF }}">Home</a></center>
+</body>
+</html>

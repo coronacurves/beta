@@ -1,0 +1,30 @@
+<html>
+<head>
+<title>{{ SYSNAME }}: Plot</title>
+<link rel="stylesheet" type="text/css" href="static/00site.css">
+<style>
+    body {
+        margin: 0px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    center {
+        font-size: large;
+    }
+    h6 {
+        font-size: x-small;
+        margin: 0px;
+    }
+</style>
+</head>
+<body>
+<table align="center" width="95%"><tr><td><a href="{{ HOME_HREF }}">Home</a></td><td width="90%" align="right"><a href="how-to-read.html">How to read</a></td></tr></table>
+<h1>{{ SYSNAME }} Plot</h1>
+<center>
+    {{ GEO_NAMES|join(" &middot; ") }}
+    <h6>To get daily results, bookmark this page and then visit daily</h6>
+    <p/>
+    <img src="{{ FIGURE_HREF }}" width="95%" />
+</center>
+</body>
+</html>

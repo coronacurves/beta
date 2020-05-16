@@ -1,0 +1,25 @@
+# Python 2.7.15
+
+# pdftk server -- The OSX version offered on the website does not work on OSX Mojave.  Discussion:
+# https://gist.github.com/jvenator/9672772a631c117da151
+# Use this version:
+# curl -o ~/Downloads/pdftk_download.pkg https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/pdftk_server-2.02-mac_osx-10.11-setup.pkg
+
+# imagemagick
+# sudo chown -R $(whoami):admin /usr/local
+# brew install imagemagick
+# Big help from:
+# https://stackoverflow.com/questions/13002494/problems-installing-imagemagick
+# https://stackoverflow.com/questions/41798012/how-do-i-download-and-install-imagemagick-for-os-x-el-capitan
+
+matplotlib==2.02
+numpy==1.16.6
+scipy==1.2
+xlrd
+Pillow==6.2.2
+pandas==0.24.2
+
+requests==2.23.0
+Flask==1.1.2
+jinja2==2.11.2
+PyYAML==5.3.1

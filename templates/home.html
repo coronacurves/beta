@@ -1,0 +1,177 @@
+<html>
+<head>
+<title>{{ SYSNAME }}</title>
+<link rel="stylesheet" type="text/css" href="static/00site.css">
+<style>
+    #geotable {
+        margin-top: 12px;
+        margin-bottom: 12px;
+        background-color: lightyellow;
+    }
+    form {
+        display: inline-block;
+        float-left: auto;
+        float-right: auto;
+    }
+    .nation1 {
+        white-space: nowrap;
+        padding-right: 1ex;
+    }
+    .div_state {
+        margin-left: 4ex;
+        margin-right: 4ex;
+        border: 1px solid gray;
+        padding: 6px;
+    }
+    input.cboxZZZZ { 
+            width: 30px; 
+            height: 20px; 
+        } 
+</style>
+{# ================================================================================ #}
+<script>
+GEOTREES = {
+{%- for series in SERIES_LIST %}
+    "{{ series.name_internal }}": {{ series.geo_tree_as_json_str() }},{% endfor %}
+};
+{# HIDE_BOX and HIDE_NAME are implemented as terrible hacks because it would have
+have been laborious to provide fully cross-browser implementation of .includes
+or .indexOf per:
+https://stackoverflow.com/questions/2430000/determine-if-string-is-in-list-in-javascript
+The hack is that we assume the length of the list for each series is exactly one.
+#}
+HIDE_BOX = {
+{%- for series in SERIES_LIST %}
+    "{{ series.name_internal }}": {{ series.hide_box }},{% endfor %}
+};
+HIDE_NAME = {
+{%- for series in SERIES_LIST %}
+    "{{ series.name_internal }}": {{ series.hide_name }},{% endfor %}
+};
+SEP = '{{ SEP }}';
+function toggle(id) {
+	if ( document.getElementById ) {
+	   var target = document.getElementById(id);
+	   if (target.style.display=="none") {
+		  target.style.display="";
+	   } else {
+		  target.style.display="none";
+	   }}}
+function country_html_fn( series_name, show_states ) {
+    function country_html_fn1( country ) {
+        var states = Object.keys( GEOTREES[series_name][ country ] ).sort();
+        var states_showable = ( states.length > 1 );
+        var value0 = series_name + SEP + country + SEP + SEP;
+        var htmlA1 = '<span class="nation1"><input type="checkbox" class="cbox" name="' + value0 + '" /> ';
+        if (country == HIDE_BOX[series_name][0]) htmlA1='';
+        if (states_showable) {
+            // console.log( JSON.stringify( GEOTREES[series_name][ country ] ) );
+            var states_divname = 'states_of_' + country;
+            var htmlA2 = "<a href='javascript:toggle(\"" + states_divname + "\");'>" + country + '</a>';
+            if (country == HIDE_NAME[series_name][0]) htmlA2='';
+            var style  = ( show_states ? '' : ' style="display:none;"' );
+            var htmlB1 = [ '<div class="div_state" id="', states_divname, '" ', style, '>',
+                           '<b><i>', country, ':</i></b> &nbsp; ', 
+                           states.map( state_html_fn( series_name, country, GEOTREES[series_name][ country ] ) ).join(" "), 
+                           '</div>' ].join("");
+        } else {
+            var htmlA2 = country;
+            var htmlB1 = '';
+            if (country == HIDE_NAME[series_name][0]) htmlA2='';
+        }
+        return htmlA1 + htmlA2 + '</span> ' + htmlB1;
+    }
+    return country_html_fn1;
+}
+function state_html_fn( series_name, nation, country_dict ) {
+    function state_html_fn1( state ) {
+        if (state) {
+            //console.log( state, '--country_dict[ state ]--' );
+            //console.log( JSON.stringify( country_dict[ state ] ) );
+            var counties = country_dict[ state ];
+            var value0 = series_name + SEP + nation + SEP + state + SEP;
+            if (counties) {
+                var county_divname = 'counties_of_' + state;
+                var html = [ '<span class="nation1">',
+                               '<input type="checkbox" class="cbox" name="', value0, '" /> ', 
+                               "<a href='javascript:toggle(\"", county_divname, "\");'>",
+                               state, '</a>',
+                             '</span>',
+                             '<div class="div_state" id="', county_divname, '" style="display: none;">',
+                               '<b><i>', state, ':</i></b> &nbsp; ', 
+                               counties.sort().map( county_html_fn( series_name, nation, state ) ).join(" "), 
+                             '</div>' ];
+            } else {
+                var html = [ '<span class="nation1">',
+                               '<input type="checkbox" class="cbox" name="', value0, '" /> ', 
+                               state, '</span>' ];
+            }
+            return html.join("");
+        } else {
+            return '';
+        }
+    }
+    return state_html_fn1;
+}
+function county_html_fn( series_name, nation, state ) {
+    function county_html_fn1( county ) {
+        if (county) {
+            var value0 = series_name + SEP + nation + SEP + state + SEP + county;
+            return '<span class="nation1" zstyle="display: none;"><input type="checkbox" class="cbox" name="' + value0 + '" /> ' + county + '</span>';
+        } else {
+            return '';
+        }
+    }
+    return county_html_fn1;
+}
+function series_pick( series_name ) {
+    var countries = Object.keys( GEOTREES[ series_name ] ).sort();
+    var html_list = countries.map( country_html_fn( series_name, (countries.length<2) ) );
+    document.getElementById("div_nation").innerHTML = html_list.join( "" );
+    return true;
+}
+function series_pick_radio( series_name ) {
+    var radios = document.forms[ "the_form" ]["{{ SERIES_NAME_PARM }}"];
+    radios.value=series_name;
+    return true;
+}
+</script>
+</head>
+{# ================================================================================ #}
+<body onload='series_pick("{{ SOURCES_AND_SERIES[0][1][0].name_internal }}");series_pick_radio("{{ SOURCES_AND_SERIES[0][1][0].name_internal }}");'>
+<table align="center" width="95%"><tr><td><a href="/about.html">About</a></td><td width="90%" align="right"><a href="how-to-read.html">How to read</a></td></tr></table>
+<h1>{{ SYSNAME }}</h1>
+
+<form name="the_form" action="/make_plots" method="GET">
+<h3 style="margin-right: 3ex;">
+    What parameter to plot?
+    <a href="bookmarks.html" style="font-weight: normal; font-size: small; padding-left: 5ex;">Bookmarks</a>
+</h3>
+<blockquote>
+    <table>
+        {% for num_and_name, series_list in SOURCES_AND_SERIES %}{# set outer_loop = loop #}
+            <tr><td colspan="99">{{ num_and_name[1] }}</td></tr>
+            <tr><td>&nbsp;&nbsp;&nbsp;</td>
+            {% for series in series_list %}{# set checked = ( outer_loop.index0 + loop.index0 == 0 ) #}
+                <td valign="top">
+                    <div style="margin-left: 2ex;">
+                    <input type="radio" value="{{ series.name_internal }}" name="{{ SERIES_NAME_PARM }}" onchange="series_pick(this.value);" />
+                    </div>
+                </td>
+                <td>
+                    <div style="white-space: nowrap;">
+                        {{ series.name_external_simplest }}
+                        <div style="font-size: x-small; color: grey;">{{ series.timedname(alpha=1) }}</div>
+                    </div>
+                </td>
+            {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+</blockquote>
+<h3>Choose one or more places</h3>
+<blockquote><div id="div_nation"></div></blockquote>
+<center><input type="submit" style="font-size: 18px;" value="{{ BUTTON_TEXT }}" /></center>
+</form>
+</body>
+</html>

@@ -1,0 +1,27 @@
+- cases_JHU:
+    - USA:
+        - Virginia
+        - Maryland
+        - District of Columbia
+- cases_JHU:
+    - USA:
+        - Virginia:
+            - Fairfax
+            - Alexandria
+            - Prince William
+            - Arlington
+        - Maryland:
+            - Montgomery
+            - Baltimore
+- cases_JHU:
+    - USA:
+        - California:
+            - Santa Clara
+        - Illinois:
+            - Cook
+    - Greece
+- tests_CTP:
+    - USA:
+        - Virginia
+        - Maryland
+        - District of Columbia

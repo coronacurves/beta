@@ -1,0 +1,24 @@
+- cases_JHU:
+    - USA:
+        - California
+        - California:
+            - San Diego
+            - Imperial
+- cases_JHU:
+    - USA:
+        - Arizona
+        - Arizona:
+            - Cochise
+            - Pima
+            - Santa Cruz
+            - Yuma
+- cases_JHU:
+    - USA:
+        - New Mexico
+        - New Mexico:
+            - Hidalgo
+            - Luna
+            - Dona Ana
+            - Otero
+            - Eddy
+            - Lea

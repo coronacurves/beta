@@ -1,0 +1,96 @@
+- cases_JHU:
+    - USA:
+        - California
+        - Oregon
+        - Nevada
+        - Arizona
+    - Mexico
+    - US
+- tests_CTP:
+    - USA:
+        - California
+- cases_JHU:
+    - USA:
+        - California:
+            - Butte
+            - Colusa
+            - Del Norte
+            - Glenn
+            - Humboldt
+            - Lake
+            - Lassen
+            - Mendocino
+            - Modoc
+            - Nevada
+            - Plumas
+            - Shasta
+            - Sierra
+            - Siskiyou
+            - Sutter
+            - Tehama
+            - Trinity
+            - Yuba
+- cases_JHU:
+    - USA:
+        - California:
+            - Amador
+            - El Dorado
+            - Napa
+            - Placer
+            - Sacramento
+            - San Joaquin
+            - Solano
+            - Sonoma
+            - Yolo
+- cases_JHU:
+    - USA:
+        - California:
+            - Alameda
+            - Contra Costa
+            - Marin
+            - San Francisco
+            - San Mateo
+            - Santa Clara
+            - Santa Cruz
+- cases_JHU:
+    - USA:
+        - California:
+            - Alpine
+            - Calaveras
+            - Fresno
+            - Inyo
+            - Kern
+            - Kings
+            - Madera
+            - Mariposa
+            - Merced
+            - Mono
+            - Monterey
+            - San Benito
+            - San Luis Obispo
+            - Stanislaus
+            - Tulare
+            - Tuolumne
+- cases_JHU:
+    - USA:
+        - California:
+            - Imperial
+            - Los Angeles
+            - Orange
+            - Riverside
+            - San Bernardino
+            - San Diego
+            - Santa Barbara
+            - Ventura
+- cases_JHU:
+    - Ukraine
+    - Nigeria
+    - India
+    - Russia
+    - China
+    - Korea, South
+    - Italy
+    - Germany
+    - Spain
+    - Sweden
+    - Greece

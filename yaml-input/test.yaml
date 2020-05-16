@@ -1,0 +1,21 @@
+- cases_JHU:
+  - USA:
+    - Texas:
+      - ""
+      - Bexar
+    - New Hampshire
+    - South Dakota
+    - North Dakota
+  - Australia
+  - Canada:
+    - Manitoba
+- deaths_NYT:
+  - USA:
+    - New York
+    - New Jersey
+    - Illinois:
+      - Cook
+    - California
+    - Michigan
+    - Louisiana
+    - Georgia
