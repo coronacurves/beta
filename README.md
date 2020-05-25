@@ -1,4 +1,4 @@
-CoronaCurves was designed to visualize geographically-specific trends of the covid-19 epidemic, based on publicly-available data. It was developed in haste by a member of the US military for personal convenience. 
+This software was designed to visualize geographically-specific trends of the covid-19 epidemic, based on publicly-available data. It was developed in haste by a member of the US military for personal convenience. 
 
 The software may be operated from the command line or via a web browser.
 
@@ -11,7 +11,7 @@ Use it entirely at your own risk. If you are ill or are concerned about someone 
 
 # Instructions for Desktop Use
 
-CoronaCurves should run well on all modern personal computers.  Consult the `instructions.md` file for instructions on installation and operation.
+The software should run well on all modern personal computers.  Consult the `instructions.md` file for instructions on installation and operation.
 
 Before deciding to install and operate the software on your computer, know that it is more than a little crappy in quality, often non-Pythonic, and not well documented.  In fact, the code includes large blocks of unneeded code that the author may or may not get around to removing some day.
 
