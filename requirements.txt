@@ -13,7 +13,7 @@
 # https://stackoverflow.com/questions/41798012/how-do-i-download-and-install-imagemagick-for-os-x-el-capitan
 
 matplotlib==2.02
-numpy==1.16.6
+numpy==1.22.0
 scipy==1.2
 xlrd
 Pillow==6.2.2
